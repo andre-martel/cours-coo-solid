@@ -1,9 +1,14 @@
-interface InvoiceRepository {
+interface ReadableInvoiceRepository {
   getInvoice(): string;
+}
+
+interface WritableInvoiceRepository {
   createInvoice(): string;
 }
 
-class LegacyOldSystemInvoiceRepository implements InvoiceRepository {
+class LegacyOldSystemInvoiceRepository
+  implements ReadableInvoiceRepository, WritableInvoiceRepository
+{
   getInvoice(): string {
     return "http://s3.com/invoice.pdf";
   }
@@ -15,12 +20,8 @@ class LegacyOldSystemInvoiceRepository implements InvoiceRepository {
   }
 }
 
-class NewMigratedSystemInvoiceRepository implements InvoiceRepository {
+class NewMigratedSystemInvoiceRepository implements ReadableInvoiceRepository {
   getInvoice(): string {
     return "http://storage.com/invoice.pdf";
-  }
-
-  createInvoice(): string {
-    throw new Error("Method not implemented."); // Because new system has not migrated their creation API yet
   }
 }

@@ -1,4 +1,8 @@
-class Rectangle {
+interface Shape {
+  getArea(): number;
+}
+
+class Rectangle implements Shape {
   constructor(private width: number, private length: number) {}
 
   setWidth(width: number) {
@@ -14,22 +18,14 @@ class Rectangle {
   }
 }
 
-class Square extends Rectangle {
+class Square implements Shape {
+  side: number;
+
   constructor(side: number) {
-    super(side, side);
+    this.side = side;
   }
 
-  public setWidth(width: number) {
-    super.setWidth(width);
-    super.setLength(width);
-  }
-
-  public setLength(length: number) {
-    super.setWidth(length);
-    super.setLength(length);
+  getArea(): number {
+    return this.side * this.side;
   }
 }
-
-const rect: Rectangle = new Square(10);
-rect.setWidth(20);
-rect.getArea(); // Should be 200 but if rect is a Square, area is 400 ❌
